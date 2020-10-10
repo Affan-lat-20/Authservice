@@ -1,10 +1,15 @@
 const router = require('express').Router();
 const User = require('../model/User');
-// const Branduser = require('../model/Branduser');
+const Branduser = require('../model/Branduser');
+const BrandEmployee = require('../model/BrandEmployee');
+
 
 const { Router } = require('express');
 const AuthController = require("../controllers/AuthController");
-const { populate } = require('../model/Branduser');
+const BrandEmployeeController=require("../controllers/BrandEmployeeController");
+// const { populate } = require('../model/Branduser');
+// const { populate } = require('../model/BrandEmployee');
+
 //const registerValidation = require('../validation');
 // const bcrypt = require('bcryptjs');
 // const jwt = require("jsonwebtoken");
@@ -25,10 +30,43 @@ router.delete('/delete/:id',AuthController.delete);
 
 router.put('/edit/:id',AuthController.edit);
 
+// create brandemployee
+router.post('/:id/brandemployee',BrandEmployeeController.registerEmployee);
+router.delete('/:id/employeeDelete',BrandEmployeeController.employeeDelete);
+
+
+// ----Testing-BrandEmployee
+// router.post('/:id/brandemployee',async(req,res)=>{
+// const brandemployee = new BrandEmployee({
+//     Companyid: {_id:req.params.id},
+//         employee:{
+//             employeePicture:req.body.employee.employeePicture,
+//             employeeFirstName:req.body.employee.employeeFirstName,
+//             employeeLastName: req.body.employee.employeeLastName,
+//             employeeEmail: req.body.employee.employeeEmail,
+//             employeePhoneNumber: req.body.employee.employeePhoneNumber,
+//             employeeCompanyName: req.body.employee.employeeCompanyName
+//         }
+// });
+//     try {
+//         const savedbrandemp = await brandemployee.save();
+//         // console.log(savedUser);
+
+//         res.send(savedbrandemp);
+        
+//     } catch (error) {
+//         res.status(400).send(error);
+//     }
+
+   
+
+
+
+
 //brandusers
 // router.post('/:id/brandusers',async(req,res,) =>{
 
-// const branduser = new Branduser({
+// const Branduser = new Branduser({
 // 	Companyid: {_id: req.params.id},
 //     firstName: req.body.firstName,
 //     lastName: req.body.lastName,
@@ -38,7 +76,7 @@ router.put('/edit/:id',AuthController.edit);
 //     email: req.body.email
 // });
 //     try {
-//         populate('Companyid')
+//         // populate('Companyid')
 //         const savedbrandUser = await branduser.save();
         
 //         // console.log(savedUser);
@@ -53,12 +91,16 @@ router.put('/edit/:id',AuthController.edit);
 // });
 
 
-router.post('/:id/brandusers',async(req,res,) =>{
-    var conditions ={_id: req.params.id};
-    User.findOneAndUpdate(conditions,req.body.brandusers)
+// router.post('/:id/brandusers',async(req,res,) =>{
+//     var conditions ={_id: req.params.id};
+//     User.findOneAndUpdate(conditions,req.body.brandusers)
+
+
     
    
-   console.log(conditions._id)
+//    console.log(conditions._id)
+
+
 //    .then((user)=>{
 //        if(user != null){
 //            user.brandusers.push(req.body);
@@ -73,7 +115,7 @@ router.post('/:id/brandusers',async(req,res,) =>{
 //            })
 //        }
 //    }) 
-});
+// });
 // router.post('/:id/brandusers',async(req,res,) =>
 // {
 // 	User.findById(req.params._id)
@@ -102,7 +144,7 @@ router.post('/:id/brandusers',async(req,res,) =>{
 //     , (err) => (err))
 // 	.catch((err) => (err));
 // });
-//
+
 
 // router.post("/:id/branduser", (req, res, next) => {
 // 	User.findById({_id: req.params.id})
@@ -135,8 +177,8 @@ router.post('/:id/brandusers',async(req,res,) =>{
 // 		res.status(500).json({
 // 		  error: err
 // 		});
-// 	  });
-//   });
+	//   });
+  
 
 
 

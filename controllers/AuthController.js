@@ -1,9 +1,9 @@
 const User = require('../model/User');
-const Branduser = require('../model/Branduser');
+// const Branduser = require('../model/Branduser');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const Joi = require('@hapi/joi');
-
+const BrandEmployee=require('../model/BrandEmployee');
 
 exports.register = async(req,res)=>
 {
