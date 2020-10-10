@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 // const Branduser = require('../model/Branduser');
 var Schema = mongoose.Schema;
 
-
-
 const companyproductSchema = new Schema(
     {
         productName:{
