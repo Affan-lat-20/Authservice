@@ -11,55 +11,92 @@ exports.register = async(req,res)=>
 
     //Validate USER DATA Before SUBMIT
    
-    const schema = Joi.object({ 
-        firstName: Joi.string().min(4).max(20).required(),
-        lastName: Joi.string().min(4).max(20).required(),
-        country: Joi.string().min(4).required(),
-        city: Joi.string().min(3).required(),
-        companyName: Joi.string().min(4).required(),
-        websiteUrl: Joi.string().min(4).required(),
-        email: Joi.string().min(8).required(),
-        password: Joi.string().min(8).required()
-    });
+    // const schema = Joi.object({ 
+    //     firstName: Joi.string().min(4).max(20).required(),
+    //     lastName: Joi.string().min(4).max(20).required(),
+    //     country: Joi.string().min(4).required(),
+    //     city: Joi.string().min(3).required(),
+    //     companyName: Joi.string().min(4).required(),
+    //     websiteUrl: Joi.string().min(4).required(),
+    //     email: Joi.string().min(8).required(),
+    //     password: Joi.string().min(8).required()
+    // });
     
-    const {error} = schema.validate(req.body);
+    // const {error} = schema.validate(req.body);
     
-    if (error) return res.status(400).send(error.details[0].message);
+    // if (error) return res.status(400).send(error.details[0].message);
 
     //Check if email already on Database
 
-    const emailExist = await User.findOne({email:req.body.email});
-    if(emailExist) return res.status(400).send('Email already exist');
+    // const emailExist = await User.findOne({email:req.body.email});
+    // if(emailExist) return res.status(400).send('Email already exist');
 
     //User password hashing
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword= await bcrypt.hash(req.body.password, salt);
+    const hashedPassword= await bcrypt.hash(req.body.influencer.influencerDetails.password, salt);
+    // create new user
+
+    const user = new User({
+        userType: req.body.userType,
+        eConcent : {
+            isAccepted: req.body.eConcent.isAccepted,
+            signature: req.body.eConcent.signature
+        },
+        brand : null,
+        influencer: {
+         influencerDetails : {
+             firstName: req.body.influencer.influencerDetails.firstName,
+             lastName: req.body.influencer.influencerDetails.lastName,
+             country: req.body.influencer.influencerDetails.country,
+             city: req.body.influencer.influencerDetails.city,
+             email: req.body.influencer.influencerDetails.email,
+             password: hashedPassword
+             }
+         }
+    })
+     try {
+         const savedUser = await user.save();
+         // console.log(savedUser);
+ 
+         res.send(savedUser);
+         
+     } catch (error) {
+         res.status(400).send(error);
+     }
+ 
+
+
     
    //Create new user
 
-   const user = new User({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    country: req.body.country,
-    city: req.body.city,
-    companyName: req.body.companyName,
-    websiteUrl: req.body.websiteUrl,
-    email: req.body.email,
-    brandusers:{},
-    password:hashedPassword
-});
-    try {
-        const savedUser = await user.save();
-        // console.log(savedUser);
+//    const user = new User({
+//        userType: "influencer",
+//        eConcent : {
+//            isAccepted: true,
+//            signature: "abc123b"
+//        },
+//        brand : null,
+//        influencer: {
+//         influencerDetails : {
+//             firstName: "xAAAAAAAAAAb",
+//             lastName: "BAAAAAAAAAAb",
+//             country: "CAAAAAAAAAAb",
+//             city: "DAAAAAAAAAAb",
+//             email: "schecssssask@gbmail.com",
+//             password: "FAAAAAAAAAAb"
+//             }
+//         }
+//    })
+//     try {
+//         const savedUser = await user.save();
+//         // console.log(savedUser);
 
-        res.send(savedUser);
+//         res.send(savedUser);
         
-    } catch (error) {
-        res.status(400).send(error);
-    }
-
-   
+//     } catch (error) {
+//         res.status(400).send(error);
+//     }
 }
 
 exports.login = async(req,res) =>
