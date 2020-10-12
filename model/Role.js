@@ -11,6 +11,6 @@ const roleSchema = new Schema({
         min:5,
         max:255
                                 
-        }
+    }
 });
 module.exports= mongoose.model('Role',roleSchema);

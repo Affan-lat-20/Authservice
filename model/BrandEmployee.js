@@ -1,7 +1,7 @@
 const { string } = require('@hapi/joi');
 const mongoose = require('mongoose');
 const User = require('../model/User');
-const Role = require('../model/Role');
+// const Role = require('../model/Role');
 
 var Schema = mongoose.Schema;
 
@@ -55,8 +55,8 @@ const brandemployeeSchema = new Schema(
                 
              },
 
-        roleid:{  type: mongoose.Schema.Types.ObjectId,
-            ref: 'Role' }, 
+        // roleid:{  type: mongoose.Schema.Types.ObjectId,
+        //     ref: 'Role' }, 
 
             }
  });

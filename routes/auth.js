@@ -33,6 +33,8 @@ router.put('/edit/:id',AuthController.edit);
 // create brandemployee
 router.post('/:id/brandemployee',BrandEmployeeController.registerEmployee);
 router.delete('/:id/employeeDelete',BrandEmployeeController.employeeDelete);
+router.get('/:id/employeeGet',BrandEmployeeController.employeeGet);
+router.put('/:id/employeeEdit',BrandEmployeeController.employeeEdit)
 
 
 // ----Testing-BrandEmployee
